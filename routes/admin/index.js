@@ -62,13 +62,12 @@ module.exports = app => {
     });
     app.post('/admin/api/signin', async(req, res) => {
         console.log(req.body);
-        console.log(!!req.body.username);
-        assert(!req.body.username, 422, 'username is required');
-        assert(!req.body.password, 422, 'password is required');
+        assert(!!req.body.username, 422, 'username is required');
+        assert(!!req.body.password, 422, 'password is required');
         const user = await AdminUser.findOne({ username }).exec();
-        assert(user, 422, '用户已存在');
+        assert(!user, 422, '用户已存在');
         const adminuser = await AdminUser.create({ username: req.body.username, password: req.body.password });
-        assert(!adminuser, 422, 'adminuser not created ');
+        assert(!!adminuser, 422, 'adminuser not created ');
         const token = jwt.sign({
             id: adminuser._id,
         }, app.get('secret'));
