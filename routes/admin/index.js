@@ -64,8 +64,10 @@ module.exports = app => {
         console.log(req.body);
         console.log(!!req.body.username);
         console.log(!!req.body.password);
-        assert(!!req.body.username, 422, 'username is required');
-        assert(!!req.body.password, 422, 'password is required');
+        let username_truthy = !!req.body.username;
+        let password_truthy = !!req.body.password;
+        assert(username_truthy, 422, 'username is required');
+        assert(password_truthy, 422, 'password is required');
         const user = await AdminUser.findOne({ username }).exec();
         assert(!user, 422, '用户已存在');
         const adminuser = await AdminUser.create({ username: req.body.username, password: req.body.password });
