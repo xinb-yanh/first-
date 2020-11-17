@@ -49,6 +49,7 @@ module.exports = app => {
     })
 
     app.post('/admin/api/login', async(req, res) => {
+        console.log(req.body);
         const { username, password } = req.body
         const user = await AdminUser.findOne({ username }).select('+password')
         assert(user, 422, '用户不存在')
