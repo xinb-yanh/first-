@@ -61,6 +61,7 @@ module.exports = app => {
         res.send({ token })
     });
     app.post('/admin/api/signin', async(req, res) => {
+        console.log(req.body);
         if (!req.body.username)
             return assert('error', 422, 'username is required');
         if (!req.body.password)
