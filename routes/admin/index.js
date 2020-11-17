@@ -62,6 +62,7 @@ module.exports = app => {
     });
     app.post('/admin/api/signin', async(req, res) => {
         console.log(req.body);
+        console.log(!!req.body.username);
         assert(!req.body.username, 422, 'username is required');
         assert(!req.body.password, 422, 'password is required');
         const user = await AdminUser.findOne({ username }).exec();
